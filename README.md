@@ -17,6 +17,7 @@ Dit project is een implementatie van het spel "Evil Hangman". Dit is een variant
 
 
 **Implementatie**
+
 - Het startscherm en het instellingenscherm zijn instanties van de UIViewController klasse.
 - Binnen het startscherm bevind zich het speelveld, dit is een instantie van UIView.
 - Het speelveld bevat een tekening die zichzelf inkleurt naarmate er foute letters geraden worden. Deze tekening zal gemaakt worden door middel van Apple's Sprite Kit framework.
@@ -25,6 +26,7 @@ Dit project is een implementatie van het spel "Evil Hangman". Dit is een variant
 - Het toetsenbord zal bestaan uit een verzameling van UIButtons. Het standaard toetsenbord wordt in dit geval niet gebruikt aangezien de letters die al gekozen zijn op inactief gezet moeten worden en er geen leestekens, letters met accenten of cijfers gebruikt mogen worden.
 
 **MVC**
+
 Om de code begrijpelijk, herbruikbaar en overzichtelijk te houden maak ik gebruik van het "Model-View-Controller Design Pattern".
 Hierbij staan onder andere de woorden, de algoritmes voor het "valsspelen en de eigenschappen van de tekeningen in het model. De knoppen, de sprites voor de tekening en overige interface elementen staan in de "view", en deze zullen doormiddel van de "controller" met elkaar verbonden worden door middel van de controller. (de UIViewController klassen).
 
