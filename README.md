@@ -17,9 +17,9 @@ Dit project is een implementatie van het spel "Evil Hangman". Dit is een variant
 
 
 **Implementatie**
-- Het startscherm en e
-
-
-mockups and/or wireframes of the screens a user might encounter, and the way these are linked together;
-a bulleted list of any functionality in your application that could be provided by internal frameworks, libraries, or other technologies.
-First, upload the mockup images to a doc directory in your repo. Then, write your proposal in a file called README.md and put it in the root of your repository. It should be formatted in Markdown, hence the file extension.
+- Het startscherm en het instellingenscherm zijn instanties van de UIViewController klasse.
+- Binnen het startscherm bevind zich het speelveld, dit is een instantie van UIView.
+- Het speelveld bevat een tekening die zichzelf inkleurt naarmate er foute letters geraden worden. Deze tekening zal gemaakt worden door middel van Apple's Sprite Kit framework.
+- Het textveld voor het te raden woord is een UITextField waarbij de nog niet geraden letters vervangen zijn door een "_". Op het moment dat er een letter geraden wordt zal deze vervangen worden door de juiste letter op de juiste positie.
+- Op het moment dat het spel gewonnen of verloren wordt zal er de UIView van het speelveld vervangen worden door een UIView met daarin de resultaten. Hierdoor zijn de knoppen voor de instellingen en het herstarten van het spel nogsteeds zichtbaar.
+- Het toetsenbord zal bestaan uit een verzameling van UIButtons. Het standaard toetsenbord wordt in dit geval niet gebruikt aangezien de letters die al gekozen zijn op inactief gezet moeten worden en er geen leestekens, letters met accenten of cijfers gebruikt mogen worden.
