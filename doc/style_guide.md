@@ -1,14 +1,7 @@
 
 # Objective-C Style Guide
+This Style Guide is based on the New York Time's Objective C Style Guide, with some additions and changes.
 
-## Introduction
-
-Here are some of the documents from Apple that informed the style guide. If something isn't mentioned here, it's probably covered in great detail in one of these:
-
-* [The Objective-C Programming Language](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html)
-* [Cocoa Fundamentals Guide](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html)
-* [Coding Guidelines for Cocoa](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html)
-* [iOS App Programming Guide](http://developer.apple.com/library/ios/#documentation/iphone/conceptual/iphoneosprogrammingguide/Introduction/Introduction.html)
 
 ## Table of Contents
 
@@ -21,7 +14,7 @@ Here are some of the documents from Apple that informed the style guide. If some
 * [Variables](#variables)
 * [Naming](#naming)
 * [Comments](#comments)
-* [Init & Dealloc](#init-and-dealloc)
+* [Init](#init-and-dealloc)
 * [Literals](#literals)
 * [CGRect Functions](#cgrect-functions)
 * [Constants](#constants)
@@ -128,11 +121,11 @@ Some of Apple’s APIs write garbage values to the error parameter (if non-NULL)
 
 ## Methods
 
-In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments.
+In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments. and functions should form sentences
 
 **For Example**:
 ```objc
-- (void)setExampleText:(NSString *)text image:(UIImage *)image;
+-(void)initWithSize:(CGRect *)size andColor:(UIColor *)color;
 ```
 ## Variables
 
@@ -182,20 +175,6 @@ UIButton *settingsButton;
 UIButton *setBut;
 ```
 
-A three letter prefix (e.g. `NYT`) should always be used for class names and constants, however may be omitted for Core Data entity names. Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.
-
-**For example:**
-
-```objc
-static const NSTimeInterval NYTArticleViewControllerNavigationFadeAnimationDuration = 0.3;
-```
-
-**Not:**
-
-```objc
-static const NSTimeInterval fadetime = 1.7;
-```
-
 Properties and local variables should be camel-case with the leading word being lowercase.
 
 Instance variables should be camel-case with the leading word being lowercase, and should be prefixed with an underscore. This is consistent with instance variables synthesized automatically by LLVM. **If LLVM can synthesize the variable automatically, then let it.**
@@ -218,9 +197,8 @@ When they are needed, comments should be used to explain **why** a particular pi
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. This does not apply to those comments used to generate documentation.
 
-## init and dealloc
 
-`dealloc` methods should be placed at the top of the implementation, directly after the `@synthesize` and `@dynamic` statements. `init` should be placed directly below the `dealloc` methods of any class.
+## init
 
 `init` methods should be structured like this:
 
@@ -285,26 +263,6 @@ CGFloat width = frame.size.width;
 CGFloat height = frame.size.height;
 ```
 
-## Constants
-
-Constants are preferred over in-line string literals or numbers, as they allow for easy reproduction of commonly used variables and can be quickly changed without the need for find and replace. Constants should be declared as `static` constants and not `#define`s unless explicitly being used as a macro.
-
-**For example:**
-
-```objc
-static NSString * const NYTAboutViewControllerCompanyName = @"The New York Times Company";
-
-static const CGFloat NYTImageThumbnailHeight = 50.0;
-```
-
-**Not:**
-
-```objc
-#define CompanyName @"The New York Times Company"
-
-#define thumbnailHeight 2
-```
-
 ## Enumerated Types
 
 When using `enum`s, it is recommended to use the new fixed underlying type specification because it has stronger type checking and code completion. The SDK now includes a macro to facilitate and encourage use of fixed underlying types — `NS_ENUM()`
@@ -315,21 +273,6 @@ When using `enum`s, it is recommended to use the new fixed underlying type speci
 typedef NS_ENUM(NSInteger, NYTAdRequestState) {
     NYTAdRequestStateInactive,
     NYTAdRequestStateLoading
-};
-```
-
-## Bitmasks
-
-When working with bitmasks, use the `NS_OPTIONS` macro.
-
-**Example:**
-
-```objc
-typedef NS_OPTIONS(NSUInteger, NYTAdCategory) {
-  NYTAdCategoryAutos      = 1 << 0,
-  NYTAdCategoryJobs       = 1 << 1,
-  NYTAdCategoryRealState  = 1 << 2,
-  NYTAdCategoryTechnology = 1 << 3
 };
 ```
 
@@ -427,15 +370,3 @@ This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.
 The physical files should be kept in sync with the Xcode project files in order to avoid file sprawl. Any Xcode groups created should be reflected by folders in the filesystem. Code should be grouped not only by type, but also by feature for greater clarity.
 
 When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many [additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings) as possible. If you need to ignore a specific warning, use [Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas).
-
-# Other Objective-C Style Guides
-
-If ours doesn't fit your tastes, have a look at some other style guides:
-
-* [Google](http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
-* [GitHub](https://github.com/github/objective-c-conventions)
-* [Adium](https://trac.adium.im/wiki/CodingStyle)
-* [Sam Soffes](https://gist.github.com/soffes/812796)
-* [CocoaDevCentral](http://cocoadevcentral.com/articles/000082.php)
-* [Luke Redpath](http://lukeredpath.co.uk/blog/my-objective-c-style-guide.html)
-* [Marcus Zarra](http://www.cimgf.com/zds-code-style-guide/)
