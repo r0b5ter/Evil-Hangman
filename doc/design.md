@@ -6,7 +6,7 @@ This app is a variation on the populair "Hangman" game. It is played the same wa
 
 #Classes
 
-##Model
+###Model
 
 Words: Class that parses the words.plist to an NSArray of strings.
 Functions:
@@ -20,7 +20,7 @@ startGame(): initializes an array of words from the word class and starts a game
 
 
 
-##View
+###View
 
 PlayingFieldView: a subclass of UIView that contains:
 	a UILabel to display the score
@@ -35,11 +35,15 @@ GameKeyboard: a custom keyboard class, contains a UIButton for every letter in t
 
 
 
-##Controller
+###Controller
 HangManGameViewController: Subclass of UIViewcontroller to control the main screen. This viewcontroller is used to display the playingfield, the custom keyboard and control the buttons that are used to restart the game and to navigate to the settings menu.
 
 SettingsViewController: Subclass of UIViewController that is used to display the settings menu.
 
 
-APIs
+##APIs
 This app mostly uses the default apple APIs, but in particular UIKit & Sprite Kit.
+
+##Wireframe:
+![wireframe](https://raw.github.com/r0b5ter/Evil-Hangman/master/doc/wireframe.png)
+
