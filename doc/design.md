@@ -43,3 +43,7 @@ SettingsViewController: Subclass of UIViewController that is used to display the
 
 ##APIs
 This app mostly uses the default apple APIs, but in particular UIKit & Sprite Kit.
+
+##Wireframe:
+![wireframe](https://raw.github.com/r0b5ter/Evil-Hangman/master/doc/wireframe.png)
+
