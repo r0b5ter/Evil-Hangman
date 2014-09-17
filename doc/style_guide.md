@@ -14,7 +14,7 @@ This Style Guide is based on the New York Time's Objective C Style Guide, with s
 * [Variables](#variables)
 * [Naming](#naming)
 * [Comments](#comments)
-* [Init](#init-and-dealloc)
+* [Init](#init)
 * [Literals](#literals)
 * [CGRect Functions](#cgrect-functions)
 * [Constants](#constants)
