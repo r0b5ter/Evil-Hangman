@@ -131,6 +131,52 @@
     }
 }
 
+-(void)gameOver{
+    NSLog(@"GameOver function is called");
+//    UIView *gameOverView = [[UIView alloc] initWithFrame:self.playingFieldView.frame];
+//    UILabel *gameOverLabel = [[UILabel alloc] init];
+//    if(self.game.gameOver){
+//        gameOverLabel.text == @"You lost!";
+//    }
+//    [gameOverView addSubview:gameOverLabel];
+//    [self.view addSubview:gameOverView];
+    NSString *message = [NSString string];
+    if(self.game.gameOver){
+        message = @"You Lost!";
+    } else{
+        message = @"You Won!";
+    }
+    
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Game Over"
+                                  message:message
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                         actionWithTitle:@"Cancel"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    UIAlertAction* restart = [UIAlertAction
+                             actionWithTitle:@"Restart"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [self startNewGame];
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    [alert addAction:cancel];
+    [alert addAction:restart];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+}
+
 - (IBAction)togglePopover:(id)sender
 {
     if (self.flipsidePopoverController) {
@@ -141,28 +187,24 @@
     }
 }
 
-- (IBAction)startGame:(UIButton *)sender {
-    NSLog(@"Number of words = %d", [self.game.words numberOfWords]);
-}
-
-- (IBAction)filterButtonPressed:(UIButton *)sender {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSInteger wordLength = [defaults integerForKey:@"wordLength"];
-}
-
 - (IBAction)restartGame:(UIButton *)sender {
     [self startNewGame];
 }
 
 - (IBAction)keyboardButton:(UIButton *)sender {
+    
+    sender.enabled = NO;
     NSLog(@"Key pressed = %@",sender.titleLabel.text);
     [self.game playLetter:[sender.titleLabel.text characterAtIndex:0]];
     [self updateWordLabel];
-//    [self updateLabelWithLetters:newLetters];
     [self updateGuessLabel];
-//    NSLog(@"Newletters: %@", newLetters);
-    //self.wordLabel.text = newLetters;
-    sender.enabled = NO;
+    if(![self.wordLabel.text containsString:[NSString stringWithFormat:@"%c",'_']]){
+        [self gameOver];
+    }
+    if(self.game.gameOver){
+        [self gameOver];
+        NSLog(@"Game Over");
+    }
 }
 
 @end

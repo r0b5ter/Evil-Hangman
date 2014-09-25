@@ -12,12 +12,12 @@
 
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate, UIPopoverControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *playingFieldView;
 @property (weak, nonatomic) IBOutlet UILabel *guessRemainingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *wordLabel;
 @property (strong, nonatomic) UIPopoverController *flipsidePopoverController;
 
-- (IBAction)startGame:(UIButton *)sender;
-- (IBAction)filterButtonPressed:(UIButton *)sender;
+
 - (IBAction)restartGame:(UIButton *)sender;
 
 - (IBAction)keyboardButton:(UIButton *)sender;

@@ -13,6 +13,7 @@
 
 -(id)init{
     self = [super init];
+    self.gameOver = NO;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.numberOfGuesses = [defaults integerForKey:@"numberOfGuesses"];
     self.wordLength = [defaults integerForKey:@"wordLength"];
@@ -22,10 +23,8 @@
     return self;
 }
 
+//
 -(void)playLetter:(char)letter{
-    if(self.numberOfGuesses-- == 0){
-        self.gameOver = YES;
-    }
     NSMutableDictionary *equivalenceClasses = [[NSMutableDictionary alloc] init];
     NSMutableArray *largestClasses = [[NSMutableArray alloc] init];
     int largestClassCount = 0;
@@ -71,6 +70,15 @@
     NSString *partialWord = [[equivalenceClasses allKeysForObject:[largestClasses firstObject]] firstObject];
     //return partialWord;//NSLog(@"%@",partialWord); //logs the key of the equivalence class
     self.guessedLetters = partialWord;
+    if(!([partialWord containsString:[NSString stringWithFormat:@"%c", letter]])){
+        self.numberOfGuesses--;
+        //if(self.numberOfGuesses-- < 1){
+        if(self.numberOfGuesses < 1){
+            NSLog(@"game over");
+            self.gameOver = YES;
+        }
+    }
+//    return self.gameOver;
 }
 
 
