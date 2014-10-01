@@ -1,37 +1,38 @@
 //
-//  HangManGame.m
+//  Game.m
 //  Hangman
 //
 //  Created by Rob Kunst on 23/09/14.
 //  Copyright (c) 2014 Rob Kunst. All rights reserved.
 //
 
-#import "HangManGame.h"
+#import "Game.h"
 #import "Words.h"
 
-@implementation HangManGame
+@implementation Game
 
--(id)init{
+//Custom initializer
+-(id)initWithWordLength:(NSUInteger)wordLength andNumberOfGuesses:(NSUInteger)numberOfGuesses{
     self = [super init];
     self.gameOver = NO;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.numberOfGuesses = [defaults integerForKey:@"numberOfGuesses"];
-    self.wordLength = [defaults integerForKey:@"wordLength"];
     
+    self.wordLength = wordLength;
+    self.numberOfGuesses = numberOfGuesses;
+
     self.words = [[Words alloc] init];
     [self.words filterWordsOfLength:self.wordLength];
     return self;
 }
 
-//
+//takes a letter and creates all the equivalence classes from the list of words.
 -(void)playLetter:(char)letter{
     NSMutableDictionary *equivalenceClasses = [[NSMutableDictionary alloc] init];
     NSMutableArray *largestClasses = [[NSMutableArray alloc] init];
     int largestClassCount = 0;
     
+    //loop through every word in the word list to see if a letter has been guessed correctly.
+    //creates a new string with the guessed letter on the right spot and _'s elsewhere.
     for(NSString *word in self.words.words){
-        //loop through every word in the word list to see if a letter has been guessed correctly.
-        //creates a new string with the guessed letter on the right spot and _'s elsewhere.
         NSMutableString *partialWord = [[NSMutableString alloc] init];
         for(int index = 0; index < word.length; index++){
             char character = [word characterAtIndex:index];
@@ -42,8 +43,7 @@
                 [partialWord appendString:@"_"];
             }
         }
-        //NSLog(@"Partial word = %@", partialWord);
-        
+
         NSMutableArray *equivalenceClass = [equivalenceClasses objectForKey:partialWord];
         //check if the equivalence class already exists and if not, create a new one.
         if (equivalenceClass){
@@ -53,32 +53,31 @@
             [equivalenceClass addObject:word];
             [equivalenceClasses setObject:equivalenceClass forKey:partialWord];
         }
-//        NSLog(@"Eq class = %@ word = %@", partialWord, word);
+
         if(equivalenceClass.count > largestClassCount){
             if(equivalenceClass.count == largestClassCount) {
                 [largestClasses addObject:equivalenceClass];
             }else{
                 [largestClasses removeAllObjects];
                 [largestClasses addObject:equivalenceClass];
-                largestClassCount = equivalenceClass.count;
+                largestClassCount = (int)equivalenceClass.count;
             }
         }
     }
-    //TODO: should be random
-    self.words.words = [largestClasses firstObject];
-    NSLog(@"%@",[largestClasses firstObject]);
+
+    //Pick a random equivalence class from the array that contains all the largest equivalence classes.
+    NSUInteger randomIndex = arc4random() % [largestClasses count];
+    self.words.words = [largestClasses objectAtIndex:randomIndex];
+    
+    //Check if the guess is correct and update the state of the game.
     NSString *partialWord = [[equivalenceClasses allKeysForObject:[largestClasses firstObject]] firstObject];
-    //return partialWord;//NSLog(@"%@",partialWord); //logs the key of the equivalence class
     self.guessedLetters = partialWord;
     if(!([partialWord containsString:[NSString stringWithFormat:@"%c", letter]])){
         self.numberOfGuesses--;
-        //if(self.numberOfGuesses-- < 1){
         if(self.numberOfGuesses < 1){
-            NSLog(@"game over");
             self.gameOver = YES;
         }
     }
-//    return self.gameOver;
 }
 
 

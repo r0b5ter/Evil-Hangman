@@ -16,7 +16,9 @@
 
 @interface FlipsideViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *worldLengthLabel;
+@property NSUserDefaults *userDefaults;
+
+@property (weak, nonatomic) IBOutlet UILabel *wordLengthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guessLabel;
 
 @property (weak, nonatomic) IBOutlet UISlider *wordLengthSlider;

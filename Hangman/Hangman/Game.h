@@ -1,5 +1,5 @@
 //
-//  HangManGame.h
+//  Game.h
 //  Hangman
 //
 //  Created by Rob Kunst on 23/09/14.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Words.h"
 
-@interface HangManGame : NSObject
+@interface Game : NSObject
 
 @property NSInteger wordLength;
 @property NSInteger numberOfGuesses;
@@ -18,5 +18,6 @@
 @property BOOL gameOver;
 
 -(void)playLetter:(char)letter;
+-(id)initWithWordLength:(NSUInteger)wordLength andNumberOfGuesses:(NSUInteger)numberOfGuesses;
 
 @end

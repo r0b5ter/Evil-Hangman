@@ -22,6 +22,7 @@
     return self;
 }
 
+//Return a subset of all the words that have the specified length
 -(void)filterWordsOfLength:(NSInteger)length{
     
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *string, NSDictionary *bindings) {

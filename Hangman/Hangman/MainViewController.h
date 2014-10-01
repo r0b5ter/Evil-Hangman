@@ -7,7 +7,7 @@
 //
 
 #import "FlipsideViewController.h"
-#import "HangManGame.h"
+#import "Game.h"
 #import "Words.h"
 
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate, UIPopoverControllerDelegate>
@@ -23,7 +23,7 @@
 - (IBAction)keyboardButton:(UIButton *)sender;
 
 @property Words *words;
-@property HangManGame *game;
+@property Game *game;
 
 
 @property NSArray *keys;

@@ -7,38 +7,34 @@
 //
 
 #import "MainViewController.h"
-#import "HangManGame.h"
+#import "Game.h"
 #import "Words.h"
-
-@interface MainViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
-
-@end
 
 @implementation MainViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //create a new words object and start the game with those words.
     self.words = [[Words alloc] init];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [self startNewGame];
 }
 
--(void)updateGuessLabel{
-    self.guessRemainingLabel.text = [NSString stringWithFormat:@"Guesses left: %d", self.game.numberOfGuesses];
-}
-
 -(void)startNewGame{
-    self.game = [[HangManGame alloc] init];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUInteger wordLength = [defaults integerForKey:@"wordLength"];
+    NSUInteger numberOfGuesses = [defaults integerForKey:@"numberOfGuesses"];
+    self.game = [[Game alloc] initWithWordLength:wordLength andNumberOfGuesses:numberOfGuesses];
     NSMutableString *wordformat = [NSMutableString new];
     
-    // Change currentProgress into hyphens.
+    //The word to be guessed starts with an underscore for every letter in the word.
     for (int i = 1; i <= self.game.wordLength; i++) {
         [wordformat appendString:@"_"];
     }
     self.wordLabel.text = wordformat;
     
-    //reactivate the keyboard buttons
+    //(Re)activate the keyboard buttons
     for (UIView* view in self.view.subviews)
     {
         if([view isKindOfClass:[UIButton class]]){
@@ -49,57 +45,30 @@
     [self updateGuessLabel];
 }
 
--(void)playLetter:(NSString*)key{
-    NSLog(@"Played key: %@",key);
-    return;
+-(void)updateGuessLabel{
+    self.guessRemainingLabel.text = [NSString stringWithFormat:@"Guesses left: %d", (int)self.game.numberOfGuesses];
 }
 
+//Updates the word own screen with the guessed letters.
 -(void)updateWordLabel{
-    
     NSString *letters = self.game.guessedLetters;
     NSString *currentWord = self.wordLabel.text;
-    // iterate through word
+    // iterate through word and replace the letters that are guessed correctly.
     for (int i=0; i<self.game.wordLength; i++) {
-        NSLog(@"for loop");
-        
         char currentWordLetter = [currentWord characterAtIndex:i];
         char letter = [letters characterAtIndex:i];
         char underscore = '_';
-        
         if(currentWordLetter == underscore){
-            NSLog(@"if loop");
             NSRange range = NSMakeRange(i, 1);
             currentWord = [currentWord stringByReplacingCharactersInRange:range withString:[NSString stringWithFormat:@"%c",letter]];
         }
     }
     self.wordLabel.text = currentWord;
 }
-
--(void)updateLabelWithLetters:(NSString*)letters{
-    
-    NSString *currentWord = self.wordLabel.text;
-    // iterate through word
-    for (int i=0; i<self.game.wordLength; i++) {
-        NSLog(@"for loop");
-        
-        char currentWordLetter = [currentWord characterAtIndex:i];
-        char letter = [letters characterAtIndex:i];
-        char underscore = '_';
-        
-        if(currentWordLetter == underscore){
-            NSLog(@"if loop");
-            NSRange range = NSMakeRange(i, 1);
-            currentWord = [currentWord stringByReplacingCharactersInRange:range withString:[NSString stringWithFormat:@"%c",letter]];
-        }
-    }
-    self.wordLabel.text = currentWord;
-}
-    
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Flipside View Controller
@@ -131,20 +100,14 @@
     }
 }
 
+
+//If game is over, check if the player has won or lost and present an alertview to notify him/her.
 -(void)gameOver{
-    NSLog(@"GameOver function is called");
-//    UIView *gameOverView = [[UIView alloc] initWithFrame:self.playingFieldView.frame];
-//    UILabel *gameOverLabel = [[UILabel alloc] init];
-//    if(self.game.gameOver){
-//        gameOverLabel.text == @"You lost!";
-//    }
-//    [gameOverView addSubview:gameOverLabel];
-//    [self.view addSubview:gameOverView];
     NSString *message = [NSString string];
     if(self.game.gameOver){
-        message = @"You Lost!";
+        message = @"You Lost!\n Restart?";
     } else{
-        message = @"You Won!";
+        message = @"You Won!\n Press Cancel to see the word!";
     }
     
     UIAlertController * alert=   [UIAlertController
@@ -192,18 +155,18 @@
 }
 
 - (IBAction)keyboardButton:(UIButton *)sender {
-    
+    //Disable the key if it has been pressed.
     sender.enabled = NO;
-    NSLog(@"Key pressed = %@",sender.titleLabel.text);
     [self.game playLetter:[sender.titleLabel.text characterAtIndex:0]];
     [self updateWordLabel];
     [self updateGuessLabel];
+    //If there are no more unguessed letters, the game is won.
     if(![self.wordLabel.text containsString:[NSString stringWithFormat:@"%c",'_']]){
         [self gameOver];
     }
+    //If there are no more options left, the game is also over.
     if(self.game.gameOver){
         [self gameOver];
-        NSLog(@"Game Over");
     }
 }
 

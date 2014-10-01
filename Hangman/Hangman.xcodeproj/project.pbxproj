@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D4054A8D19D182AC00B3A430 /* HangManGame.m in Sources */ = {isa = PBXBuildFile; fileRef = D4054A8C19D182AC00B3A430 /* HangManGame.m */; };
+		D4054A8D19D182AC00B3A430 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = D4054A8C19D182AC00B3A430 /* Game.m */; };
 		D4C7687219C1C2DF0012C15E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C7687119C1C2DF0012C15E /* Foundation.framework */; };
 		D4C7687419C1C2DF0012C15E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C7687319C1C2DF0012C15E /* CoreGraphics.framework */; };
 		D4C7687619C1C2DF0012C15E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C7687519C1C2DF0012C15E /* UIKit.framework */; };
@@ -38,8 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D4054A8B19D182AC00B3A430 /* HangManGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HangManGame.h; sourceTree = "<group>"; };
-		D4054A8C19D182AC00B3A430 /* HangManGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HangManGame.m; sourceTree = "<group>"; };
+		D4054A8B19D182AC00B3A430 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		D4054A8C19D182AC00B3A430 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
 		D4C7686E19C1C2DF0012C15E /* Hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4C7687119C1C2DF0012C15E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D4C7687319C1C2DF0012C15E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,8 +130,8 @@
 				D4C7688A19C1C2DF0012C15E /* MainViewController.m */,
 				D4C7A5C519C6F9AA00A05EAD /* Words.h */,
 				D4C7A5C619C6F9AA00A05EAD /* Words.m */,
-				D4054A8B19D182AC00B3A430 /* HangManGame.h */,
-				D4054A8C19D182AC00B3A430 /* HangManGame.m */,
+				D4054A8B19D182AC00B3A430 /* Game.h */,
+				D4054A8C19D182AC00B3A430 /* Game.m */,
 				D4C7688C19C1C2DF0012C15E /* FlipsideViewController.h */,
 				D4C7688D19C1C2DF0012C15E /* FlipsideViewController.m */,
 				D4C7A5C819C6F9C200A05EAD /* words.plist */,
@@ -217,6 +217,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Rob Kunst";
 				TargetAttributes = {
+					D4C7686D19C1C2DF0012C15E = {
+						DevelopmentTeam = CQ74745625;
+					};
 					D4C7689419C1C2E00012C15E = {
 						TestTargetID = D4C7686D19C1C2DF0012C15E;
 					};
@@ -269,7 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C7A5C719C6F9AA00A05EAD /* Words.m in Sources */,
-				D4054A8D19D182AC00B3A430 /* HangManGame.m in Sources */,
+				D4054A8D19D182AC00B3A430 /* Game.m in Sources */,
 				D4C7688219C1C2DF0012C15E /* AppDelegate.m in Sources */,
 				D4C7688B19C1C2DF0012C15E /* MainViewController.m in Sources */,
 				D4C7688E19C1C2DF0012C15E /* FlipsideViewController.m in Sources */,
@@ -400,10 +403,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hangman/Hangman-Prefix.pch";
 				INFOPLIST_FILE = "Hangman/Hangman-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -413,10 +419,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hangman/Hangman-Prefix.pch";
 				INFOPLIST_FILE = "Hangman/Hangman-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
